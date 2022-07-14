@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class MainManager : MonoBehaviour
 {
+
     public Brick BrickPrefab;
     public int LineCount = 6;
     public Rigidbody Ball;
@@ -14,12 +15,10 @@ public class MainManager : MonoBehaviour
     public GameObject GameOverText;
     
     private bool m_Started = false;
-    private int m_Points;
+    public int m_Points;
     
     private bool m_GameOver = false;
 
-    
-    // Start is called before the first frame update
     void Start()
     {
         const float step = 0.6f;
@@ -71,6 +70,16 @@ public class MainManager : MonoBehaviour
     public void GameOver()
     {
         m_GameOver = true;
+        SaveBestScore();
         GameOverText.SetActive(true);
+    }
+
+    public void SaveBestScore()
+    {
+        if (m_Points > MainManager2.Instance.bestScore)
+        {
+            MainManager2.Instance.bestScore = m_Points;
+            MainManager2.Instance.SaveScore();
+        }
     }
 }
